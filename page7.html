@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions Cloud | BIMIZI E. Florentin</title>
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #64ffda;
+            --accent: #ff2d75;
+            --dark: #020c1b;
+            --light: #ccd6f6;
+            --gray: #8892b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 47, 0.8);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            padding: 10rem 10% 5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .page-title span {
+            color: var(--secondary);
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Service Details */
+        .service-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+
+        .service-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .service-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .service-content p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .features-list {
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Technologies */
+        .tech-section {
+            margin: 6rem 0;
+        }
+
+        .tech-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-item {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Solutions List */
+        .solutions-section {
+            background: rgba(10, 25, 47, 0.3);
+            padding: 4rem;
+            border-radius: 10px;
+            margin: 4rem 0;
+        }
+
+        .solutions-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+        }
+
+        .solution-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: rgba(2, 12, 27, 0.5);
+            transition: all 0.3s;
+        }
+
+        .solution-item:hover {
+            transform: translateX(10px);
+            border-left: 3px solid var(--secondary);
+        }
+
+        .solution-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .solution-content h3 {
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: rgba(10, 25, 47, 0.5);
+            padding: 4rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 6rem 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .service-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .service-image {
+                order: -1;
+            }
+
+            .solution-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .solutions-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation identique -->
+      <!-- Navigation -->
+    <nav>
+        <a href="me.html" class="logo">LAB_<span>IT</span></a>
+        <div class="nav-links">
+            <a href="me.html#about">À Propos</a>
+            <a href="me.html#services">Services</a>
+            <a href="me.html#contact">Contact</a>
+        </div>
+    </nav>
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Solutions <span>Cloud</span></h1>
+            <p class="page-subtitle">
+                Migrez vers le cloud en toute sérénité avec des solutions adaptées à votre activité,
+                sécurisées et optimisées pour la performance.
+            </p>
+        </header>
+
+        <section class="service-detail">
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Solutions Cloud">
+            </div>
+            <div class="service-content">
+                <h2>Infrastructure Cloud Optimisée</h2>
+                <p>
+                    Bénéficiez de toute la puissance du cloud computing sans la complexité.
+                    Je vous accompagne dans le choix, la migration et la gestion de vos solutions cloud.
+                </p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-cloud-upload-alt"></i></span>
+                        <div>
+                            <h3>Migration Cloud</h3>
+                            <p>Transfert sécurisé de vos données et applications</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-cogs"></i></span>
+                        <div>
+                            <h3>Configuration</h3>
+                            <p>Paramétrage optimal pour vos besoins spécifiques</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-lock"></i></span>
+                        <div>
+                            <h3>Sécurité</h3>
+                            <p>Protection avancée de vos données dans le cloud</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="me.html#contact" class="btn btn-primary">
+                    <i class="fas fa-cloud"></i> Évaluer ma migration
+                </a>
+            </div>
+        </section>
+
+        <!-- [Autres sections adaptées au cloud...] -->
+
+    </main>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="me.html">À Propos</a>
+            <a href="me.html#services">Services</a>
+            <a href="me.html#contact">Contact</a>
+            <a href="#">Mentions Légales</a>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/22897153100"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2023 BIMIZI E. Florentin - Tous droits réservés</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.service-detail, .tech-item, .solution-item, .cta-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling pour les liens de navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

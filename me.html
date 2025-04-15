@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIMIZI E. Florentin | Expert IT - Administration Système & Réseaux</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #64ffda;
+            --accent: #ff2d75;
+            --dark: #020c1b;
+            --light: #ccd6f6;
+            --gray: #8892b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 47, 0.8);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: var(--secondary);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* 3D Animation Container */
+        #canvas3d {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 10%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            color: var(--gray);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .skill-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Services Section */
+        #services {
+            background: rgba(2, 12, 27, 0.7);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.1);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .service-description {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 40px;
+        }
+
+        .contact-text h3 {
+            color: var(--light);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-text a:hover {
+            color: var(--secondary);
+        }
+
+        .contact-form {
+            background: rgba(10, 25, 47, 0.5);
+            padding: 2.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(2, 12, 27, 0.5);
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            #hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 10rem;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 3rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            #canvas3d {
+                position: relative;
+                width: 100%;
+                height: 50vh;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="me.html" class="logo">LAB_<span>IT</span></a>
+        <div class="nav-links">
+            <a href="#about">À Propos</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <p class="hero-subtitle">Expert en Infrastructure IT</p>
+            <h1 class="hero-title">BIMIZI <span>Florentin</span></h1>
+            <p class="hero-description">
+                Spécialiste en administration système et réseaux, je fournis des solutions IT sur mesure pour les particuliers et professionnels. 
+                Dépannage, sécurisation et optimisation de votre infrastructure numérique.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Me Contacter
+                </a>
+                <a href="#services" class="btn btn-outline">
+                    <i class="fas fa-list"></i> Mes Services
+                </a>
+            </div>
+        </div>
+        <div id="canvas3d"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">À Propos</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    Passionné par les technologies de l'information depuis plus de 5 ans, je me suis spécialisé dans 
+                    l'administration des systèmes et réseaux informatiques. Mon expertise couvre un large éventail 
+                    de compétences techniques allant du dépannage matériel à la configuration avancée d'infrastructures réseau.
+                </p>
+                <p>
+                    J'interviens aussi bien pour les particuliers que pour les professionnels, avec une approche 
+                    personnalisée et adaptée à chaque besoin. Mon objectif : fournir des solutions fiables, 
+                    sécurisées et optimisées pour votre environnement numérique.
+                </p>
+                <div class="skills-list">
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-server"></i></span>
+                        <span>Administration Serveurs</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-network-wired"></i></span>
+                        <span>Réseaux & Wifi</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-shield-alt"></i></span>
+                        <span>Sécurité Informatique</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-tools"></i></span>
+                        <span>Dépannage Hardware/Software</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-cloud"></i></span>
+                        <span>Solutions Cloud</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-icon"><i class="fas fa-wifi"></i></span>
+                        <span>Couverture Wifi Étendue</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <!-- 3D Model will be here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 class="section-title">Mes Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+               <a href="page2.html" target="_blank" ><h3 class="service-title">Infrastructure Réseau</h3></a>
+                <p class="service-description">
+                    Conception, installation et configuration de réseaux locaux (LAN/WAN), 
+                    mise en place de solutions de connectivité et optimisation des performances.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-server"></i></div>
+                 <a href="page3.html" target="_blank" ><h3 class="service-title">Administration Système</h3></a>
+                <p class="service-description">
+                    Gestion de serveurs (Windows/Linux), virtualisation, sauvegarde de données 
+                    et supervision des infrastructures informatiques.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-wifi"></i></div>
+                <a href="page4.html"><h3 class="service-title">Solutions Wifi</h3></a>
+                <p class="service-description">
+                    Installation de réseaux wifi performants, extension de couverture, 
+                    résolution des problèmes de connexion et optimisation du signal.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                <a href="page5.html" target="_blank" ><h3 class="service-title">Sécurité Informatique</h3></a>
+                <p class="service-description">
+                    Protection des systèmes contre les cybermenaces, configuration de pare-feu, 
+                    VPN et solutions antivirus avancées.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-tools"></i></div>
+                <a href="page6.html" target="_blank" ><h3 class="service-title">Dépannage IT</h3></a>
+                <p class="service-description">
+                    Intervention rapide pour résoudre les problèmes matériels et logiciels, 
+                    récupération de données et maintenance préventive.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-cloud"></i></div>
+                <a href="page7.html"><h3 class="service-title">Solutions Cloud</h3></a>
+                <p class="service-description">
+                    Migration vers le cloud, configuration de services cloud (Google Workspace, 
+                    Microsoft 365) et sauvegarde en ligne sécurisée.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="contact-text">
+                        <h3>Téléphone</h3>
+                        <a href="tel:+22897153100">+228 97 15 31 00</a>
+                        <a href="tel:+22870163700">+228 70 16 37 00</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <h3>Email</h3>
+                        <a href="mailto:bimiziflorentin@gmail.com">bimiziflorentin@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="contact-text">
+                        <h3>WhatsApp</h3>
+                        <a href="https://wa.me/22897153100">Envoyer un message</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text">
+                        <h3>Zone d'Intervention</h3>
+                        <span>Togo et environs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nom Complet</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#about">À Propos</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="#">Mentions Légales</a>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/22897153100"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2023 BIMIZI E. Florentin - Tous droits réservés</p>
+    </footer>
+
+    <!-- 3D Animation Script -->
+    <script>
+        // Configuration de la scène 3D
+        const container = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        // Création d'un modèle 3D de serveur réseau
+        const geometry = new THREE.BoxGeometry(2, 3, 1);
+        const edges = new THREE.EdgesGeometry(geometry);
+        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x64ffda }));
+        
+        const material = new THREE.MeshPhongMaterial({ 
+            color: 0x0a192f,
+            emissive: 0x64ffda,
+            emissiveIntensity: 0.2,
+            specular: 0x111111,
+            shininess: 30,
+            transparent: true,
+            opacity: 0.9
+        });
+        
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        scene.add(line);
+        
+        // Ajout de lumières
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Position de la caméra
+        camera.position.z = 5;
+        
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            cube.rotation.x += 0.005;
+            cube.rotation.y += 0.01;
+            line.rotation.x = cube.rotation.x;
+            line.rotation.y = cube.rotation.y;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Redimensionnement
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        
+        animate();
+    </script>
+
+    <!-- Scripts supplémentaires -->
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.service-card, .contact-item, .form-group').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling pour les liens de navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

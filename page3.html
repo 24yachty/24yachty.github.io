@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration Système | BIMIZI E. Florentin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #64ffda;
+            --accent: #ff2d75;
+            --dark: #020c1b;
+            --light: #ccd6f6;
+            --gray: #8892b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 47, 0.8);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            padding: 10rem 10% 5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .page-title span {
+            color: var(--secondary);
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Service Details */
+        .service-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+
+        .service-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .service-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .service-content p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .features-list {
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Technologies */
+        .tech-section {
+            margin: 6rem 0;
+        }
+
+        .tech-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-item {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Solutions List */
+        .solutions-section {
+            background: rgba(10, 25, 47, 0.3);
+            padding: 4rem;
+            border-radius: 10px;
+            margin: 4rem 0;
+        }
+
+        .solutions-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+        }
+
+        .solution-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: rgba(2, 12, 27, 0.5);
+            transition: all 0.3s;
+        }
+
+        .solution-item:hover {
+            transform: translateX(10px);
+            border-left: 3px solid var(--secondary);
+        }
+
+        .solution-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .solution-content h3 {
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: rgba(10, 25, 47, 0.5);
+            padding: 4rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 6rem 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .service-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .service-image {
+                order: -1;
+            }
+
+            .solution-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .solutions-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="me.html" class="logo">LAB_<span>IT</span></a>
+        <div class="nav-links">
+            <a href="me.html#about">À Propos</a>
+            <a href="me.html#services">Services</a>
+            <a href="me.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <header class="page-header">
+            <h1 class="page-title">Administration <span>Système</span></h1>
+            <p class="page-subtitle">
+                Gestion professionnelle de vos serveurs et infrastructures informatiques pour une performance optimale,
+                une disponibilité maximale et une sécurité renforcée.
+            </p>
+        </header>
+
+        <section class="service-detail">
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Administration système">
+            </div>
+            <div class="service-content">
+                <h2>Gestion Complète des Serveurs</h2>
+                <p>
+                    Je propose une administration système complète pour vos serveurs physiques et virtuels,
+                    quelle que soit leur taille ou complexité. De l'installation initiale à la maintenance
+                    quotidienne, je m'occupe de tout pour que vous puissiez vous concentrer sur votre cœur
+                    de métier.
+                </p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <h3>Installation & Configuration</h3>
+                            <p>Mise en place de serveurs sur mesure selon vos besoins spécifiques</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <h3>Maintenance Préventive</h3>
+                            <p>Surveillance proactive et mises à jour régulières pour éviter les pannes</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+                        <div>
+                            <h3>Sauvegarde & Restauration</h3>
+                            <p>Solutions robustes de sauvegarde et plans de reprise d'activité</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="me.html#contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Demander un audit
+                </a>
+            </div>
+        </section>
+
+        <section class="solutions-section">
+            <h2>Nos Solutions d'Administration</h2>
+            
+            <div class="solution-item">
+                <div class="solution-number">01</div>
+                <div class="solution-content">
+                    <h3>Virtualisation Serveur</h3>
+                    <p>
+                        Optimisation de vos ressources grâce à des solutions de virtualisation performantes
+                        (VMware, Hyper-V, Proxmox). Réduction des coûts matériels et amélioration de la flexibilité.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="solution-item">
+                <div class="solution-number">02</div>
+                <div class="solution-content">
+                    <h3>Services d'Annuaire</h3>
+                    <p>
+                        Mise en place et gestion d'annuaires (Active Directory, LDAP) pour une gestion centralisée
+                        des utilisateurs, des permissions et des ressources.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="solution-item">
+                <div class="solution-number">03</div>
+                <div class="solution-content">
+                    <h3>Supervision & Monitoring</h3>
+                    <p>
+                        Surveillance 24/7 de vos serveurs avec alertes en temps réel. Rapports détaillés sur les
+                        performances et prévention des incidents.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="solution-item">
+                <div class="solution-number">04</div>
+                <div class="solution-content">
+                    <h3>Migration & Modernisation</h3>
+                    <p>
+                        Accompagnement dans la migration de vos anciens systèmes vers des plateformes modernes,
+                        avec minimisation des temps d'indisponibilité.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="service-detail">
+            <div class="service-content">
+                <h2>Sécurité des Systèmes</h2>
+                <p>
+                    La sécurité de vos serveurs est une priorité absolue. Je mets en place des protections
+                    avancées contre les cybermenaces tout en garantissant la disponibilité de vos services.
+                </p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-shield-alt"></i></span>
+                        <div>
+                            <h3>Durcissement des Serveurs</h3>
+                            <p>Configuration sécurisée selon les meilleures pratiques du secteur</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-user-lock"></i></span>
+                        <div>
+                            <h3>Gestion des Accès</h3>
+                            <p>Contrôle granulaire des permissions et authentification forte</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon"><i class="fas fa-history"></i></span>
+                        <div>
+                            <h3>Journalisation</h3>
+                            <p>Traçabilité complète des activités sur vos systèmes</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="me.html" class="btn btn-outline">
+                    <i class="fas fa-phone-alt"></i> Parler à un expert
+                </a>
+            </div>
+            <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Sécurité système">
+            </div>
+        </section>
+
+        <section class="tech-section">
+            <h2>Technologies Maîtrisées</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fab fa-windows"></i></div>
+                    <h3>Windows Server</h3>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fab fa-linux"></i></div>
+                    <h3>Linux</h3>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-cube"></i></div>
+                    <h3>VMware</h3>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-server"></i></div>
+                    <h3>Hyper-V</h3>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-database"></i></div>
+                    <h3>SQL Server</h3>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Active Directory</h3>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Besoin d'un administrateur système expérimenté?</h2>
+            <p>
+                Que vous ayez besoin d'une gestion complète de votre infrastructure ou simplement d'un support ponctuel,
+                je m'adapte à vos besoins pour vous offrir un service personnalisé et professionnel.
+            </p>
+            <a href="me.html" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Discutons de votre projet
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="me.html">À Propos</a>
+            <a href="me.html#services">Services</a>
+            <a href="me.html#contact">Contact</a>
+            <a href="#">Mentions Légales</a>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/22897153100"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2023 BIMIZI E. Florentin - Tous droits réservés</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.service-detail, .tech-item, .solution-item, .cta-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling pour les liens de navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
